@@ -536,21 +536,25 @@ namespace pinocchio
                   const Eigen::MatrixBase<Matrix6Like> & I,
                   const bool update_I) const
     {
+      std::cout << "joint-planar.hpp: calc_aba" << std::endl;
       data.U.template leftCols<2>() = I.template leftCols<2>();
       data.U.template rightCols<1>() = I.template rightCols<1>();
+      std::cout << "data.U: " << std::endl << data.U << std::endl;
 
       data.StU.template leftCols<2>() = data.U.template topRows<2>().transpose();
       data.StU.template rightCols<1>() = data.U.template bottomRows<1>();
-      
+      std::cout << "data.StU: " << std::endl << data.StU << std::endl;
       // compute inverse
 //      data.Dinv.setIdentity();
 //      data.StU.llt().solveInPlace(data.Dinv);
       internal::PerformStYSInversion<Scalar>::run(data.StU,data.Dinv);
-      
+      std::cout << "data.Dinv: " << std::endl << data.Dinv << std::endl;
       data.UDinv.noalias() = data.U * data.Dinv;
+      std::cout << "data.UDinv: " << std::endl << data.UDinv << std::endl;
       
       if(update_I)
         PINOCCHIO_EIGEN_CONST_CAST(Matrix6Like,I).noalias() -= data.UDinv * data.U.transpose();
+      std::cout << "I: " << std::endl << I << std::endl;
     }
     
     static std::string classname() { return std::string("JointModelPlanar");}

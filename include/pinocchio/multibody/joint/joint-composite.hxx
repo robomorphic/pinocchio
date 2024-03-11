@@ -29,6 +29,8 @@ namespace pinocchio
                      JointDataComposite & data,
                      const Eigen::MatrixBase<ConfigVectorType> & q)
     {
+
+      //burasi joint'ler icin inertia hesaplanan yer burasi kritik, yazdirmam gereken sonraki yer burasi!'
       const JointIndex & i  = jmodel.id();
       const JointIndex succ = i+1; // successor
 

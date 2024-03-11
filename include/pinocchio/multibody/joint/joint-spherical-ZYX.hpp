@@ -392,18 +392,22 @@ namespace pinocchio
                   const Eigen::MatrixBase<Matrix6Like> & I,
                   const bool update_I) const
     {
+      std::cout << "joint-spherical-ZYX.hpp: calc_aba" << std::endl;
       data.U.noalias() = I.template middleCols<3>(Motion::ANGULAR) * data.S.angularSubspace();
+      std::cout << "data.U:" << std::endl << data.U << std::endl;
       data.StU.noalias() = data.S.angularSubspace().transpose() * data.U.template middleRows<3>(Motion::ANGULAR);
-      
+      std::cout << "data.StU:" << std::endl << data.StU << std::endl;
       // compute inverse
 //      data.Dinv.setIdentity();
 //      data.StU.llt().solveInPlace(data.Dinv);
       internal::PerformStYSInversion<Scalar>::run(data.StU,data.Dinv);
-      
+      std::cout << "data.Dinv:" << std::endl << data.Dinv << std::endl;
       data.UDinv.noalias() = data.U * data.Dinv;
+      std::cout << "data.UDinv:" << std::endl << data.UDinv << std::endl;
       
       if (update_I)
         PINOCCHIO_EIGEN_CONST_CAST(Matrix6Like,I) -= data.UDinv * data.U.transpose();
+      std::cout << "I:" << std::endl << I << std::endl;
     }
     
     static std::string classname() { return std::string("JointModelSphericalZYX"); }

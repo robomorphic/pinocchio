@@ -491,7 +491,9 @@ namespace pinocchio
                   const Eigen::MatrixBase<Matrix6Like> & I,
                   const bool update_I) const
     {
+      std::cout << "joint_mimic: calc_aba not implemented yet" << std::endl;
       // TODO: fixme
+      std::cout << "joint_mimic: calc_aba not implemented yet" << std::endl;
       m_jmodel_ref.calc_aba(data.m_jdata_ref,
                             PINOCCHIO_EIGEN_CONST_CAST(Matrix6Like,I),
                             update_I);

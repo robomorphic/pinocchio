@@ -704,8 +704,12 @@ namespace pinocchio
     {
       typedef typename ConfigVector::Scalar OtherScalar;
       
+      std::cout << "JointModelRevoluteTpl::calc" << std::endl;
       const OtherScalar & q = qs[idx_q()];
+      std::cout << "q: " << std::endl << q << std::endl;
       OtherScalar ca,sa; SINCOS(q,&sa,&ca);
+      std::cout << "ca: " << std::endl << ca << std::endl;
+      std::cout << "sa: " << std::endl << sa << std::endl;
       data.M.setValues(sa,ca);
     }
 
@@ -725,12 +729,19 @@ namespace pinocchio
                   const Eigen::MatrixBase<Matrix6Like> & I,
                   const bool update_I) const
     {
+      std::cout << "JointModelRevoluteTpl::calc_aba" << std::endl;
       data.U = I.col(Inertia::ANGULAR + axis);
+      std::cout << "data.U: " << std::endl << data.U << std::endl;
       data.Dinv[0] = Scalar(1)/I(Inertia::ANGULAR + axis,Inertia::ANGULAR + axis);
+      std::cout << "Scalar(1): " << std::endl << Scalar(1) << std::endl;
+      std::cout << "I(Inertia::ANGULAR + axis,Inertia::ANGULAR + axis): " << std::endl << I(Inertia::ANGULAR + axis,Inertia::ANGULAR + axis) << std::endl;
+      std::cout << "data.Dinv[0]: " << std::endl << data.Dinv[0] << std::endl;
       data.UDinv.noalias() = data.U * data.Dinv[0];
+      std::cout << "data.UDinv: " << std::endl << data.UDinv << std::endl;
       
       if (update_I)
         PINOCCHIO_EIGEN_CONST_CAST(Matrix6Like,I) -= data.UDinv * data.U.transpose();
+      std::cout << "I: " << std::endl << I << std::endl;
     }
     
     static std::string classname()

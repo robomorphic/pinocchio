@@ -296,15 +296,19 @@ namespace pinocchio
                   const Eigen::MatrixBase<Matrix6Like> & I,
                   const bool update_I) const
     {
+      std::cout << "joint-free-flyer.hpp: calc_aba" << std::endl;
       data.U = I;
+      std::cout << "data.U: " << std::endl << data.U << std::endl;
       
       // compute inverse
 //      data.Dinv.setIdentity();
 //      I.llt().solveInPlace(data.Dinv);
       internal::PerformStYSInversion<Scalar>::run(I,data.Dinv);
+      std::cout << "data.Dinv: " << std::endl << data.Dinv << std::endl;
       
       if (update_I)
         PINOCCHIO_EIGEN_CONST_CAST(Matrix6Like,I).setZero();
+      std::cout << "I: " << std::endl << I << std::endl;
     }
 
     static std::string classname() { return std::string("JointModelFreeFlyer"); }

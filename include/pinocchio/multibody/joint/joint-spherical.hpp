@@ -487,16 +487,18 @@ namespace pinocchio
                   const Eigen::MatrixBase<Matrix6Like> & I,
                   const bool update_I) const
     {
+      std::cout << "JointModelSphericalTpl::calc_aba" << std::endl;
       data.U = I.template block<6,3>(0,Inertia::ANGULAR);
+      std::cout << "data.U: " << std::endl << data.U << std::endl;
       
       // compute inverse
 //      data.Dinv.setIdentity();
 //      data.U.template middleRows<3>(Inertia::ANGULAR).llt().solveInPlace(data.Dinv);
       internal::PerformStYSInversion<Scalar>::run(data.U.template middleRows<3>(Inertia::ANGULAR),data.Dinv);
-      
+      std::cout << "data.Dinv: " << std::endl << data.Dinv << std::endl;
       data.UDinv.template middleRows<3>(Inertia::ANGULAR).setIdentity(); // can be put in data constructor
       data.UDinv.template middleRows<3>(Inertia::LINEAR).noalias() = data.U.template block<3,3>(Inertia::LINEAR, 0) * data.Dinv;
-      
+      std::cout << "data.UDinv: " << std::endl << data.UDinv << std::endl;
       if (update_I)
       {
         Matrix6Like & I_ = PINOCCHIO_EIGEN_CONST_CAST(Matrix6Like,I);
@@ -505,6 +507,7 @@ namespace pinocchio
         I_.template block<6,3>(0,Inertia::ANGULAR).setZero();
         I_.template block<3,3>(Inertia::ANGULAR,Inertia::LINEAR).setZero();
       }
+      std::cout << "I: " << std::endl << I << std::endl;
     }
     
     static std::string classname() { return std::string("JointModelSpherical"); }

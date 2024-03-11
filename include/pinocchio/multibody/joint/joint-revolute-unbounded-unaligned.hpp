@@ -179,12 +179,17 @@ namespace pinocchio
                   const Eigen::MatrixBase<Matrix6Like> & I,
                   const bool update_I) const
     {
+      std::cout << "joint-revolute-unbounded-unaligned.hpp: calc_aba" << std::endl;
       data.U.noalias() = I.template middleCols<3>(Motion::ANGULAR) * axis;
+      std::cout << "data.U:" << std::endl << data.U << std::endl;
       data.Dinv[0] = (Scalar)(1)/axis.dot(data.U.template segment<3>(Motion::ANGULAR));
       data.UDinv.noalias() = data.U * data.Dinv;
+      std::cout << "data.UDinv:" << std::endl << data.UDinv << std::endl;
+
       
       if (update_I)
         PINOCCHIO_EIGEN_CONST_CAST(Matrix6Like,I) -= data.UDinv * data.U.transpose();
+      std::cout << "I:" << std::endl << I << std::endl;
     }
     
     static std::string classname() { return std::string("JointModelRevoluteUnboundedUnaligned"); }
