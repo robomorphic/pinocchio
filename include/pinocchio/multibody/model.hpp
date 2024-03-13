@@ -239,7 +239,9 @@ namespace pinocchio
       /// copy into vectors
       for(size_t k = 0; k < joints.size(); ++k)
       {
+        std::cout << "previous inertias[k] = " << inertias[k] << std::endl;
         res.inertias[k] = inertias[k].template cast<NewScalar>();
+        std::cout << "new inertias[k] = " << res.inertias[k] << std::endl;
         res.jointPlacements[k] = jointPlacements[k].template cast<NewScalar>();
         res.joints[k] = joints[k].template cast<NewScalar>();
       }
