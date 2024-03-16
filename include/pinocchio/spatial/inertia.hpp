@@ -321,6 +321,19 @@ namespace pinocchio
       M.template block<3,3>(LINEAR, LINEAR ).diagonal().fill (mass());
       M.template block<3,3>(ANGULAR,LINEAR ) = alphaSkew(mass(),lever());
       M.template block<3,3>(LINEAR, ANGULAR) = -M.template block<3,3>(ANGULAR, LINEAR);
+      // AlphaSkewSquare(mass(), lever()) = 
+      // -m*(v[1]*v[1]+v[2]*v[2])
+      // m*v[0]*v[1]
+      // -m*(v[0]*v[0] + v[2]*v[2])
+      // m*v[0]*v[2]
+      // m*v[1]*v[2]
+      // -m*(v[0]*v[0] + v[1]*v[1])
+      std::cout << "mass() = " << mass() << std::endl;
+      std::cout << "lever() = " << lever() << std::endl;
+      std::cout << "inertia().m_data\n\n\n\n\n" << std::endl;
+      std::cout << inertia() << std::endl;
+      std::cout << "AlphaSkewSquare(mass(), lever())\n\n\n\n\n" << std::endl;
+      std::cout << AlphaSkewSquare(mass(), lever()) << std::endl;
       M.template block<3,3>(ANGULAR,ANGULAR) = (inertia() - AlphaSkewSquare(mass(),lever())).matrix();
 
       return M;

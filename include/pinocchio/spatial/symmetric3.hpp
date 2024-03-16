@@ -454,6 +454,13 @@ namespace pinocchio
     {
       return Symmetric3Tpl<NewScalar,Options>(m_data.template cast<NewScalar>());
     }
+
+    // << overload
+    friend std::ostream & operator << (std::ostream & os, const Symmetric3Tpl & S)
+    {
+      os << S.m_data;
+      return os;
+    }
     
     // TODO: adjust code
 //    bool isValid() const
